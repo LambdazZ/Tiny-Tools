@@ -16,6 +16,7 @@ def generate_wordcloud(excel_name: str, keywords: dict, stopwords: list, img_pat
     excel_name (str): Excel 文件名，包含文本数据。
     keywords (dict): 自定义词典，用于分词时的关键词匹配。
     stopwords (list): 停用词列表，用于过滤分词结果。
+    img_path (str): 图片路径，用作词云图的遮罩。
 
     返回值：
     无。
