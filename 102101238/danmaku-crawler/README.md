@@ -53,4 +53,4 @@
 
 ## 许可证
 
-本程序使用 GNU General Public License v3.0 许可证。详情请参阅 [LICENSE](../../../LICENSE) 文件。
+本程序使用 GNU General Public License v3.0 许可证。详情请参阅 [LICENSE](../../LICENSE) 文件。
