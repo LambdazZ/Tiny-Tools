@@ -1,0 +1,8 @@
+aiohttp==3.8.5
+matplotlib==3.7.2
+numpy==1.25.2
+openpyxl==3.1.2
+Pillow==10.0.0
+pkuseg==0.0.25
+selenium==4.12.0
+wordcloud==1.9.2
