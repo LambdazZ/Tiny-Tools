@@ -87,12 +87,14 @@ async def get_video_cid(session, bvid: str) -> int:
     async with session.get(url) as response:
         if response.status == 200:
             res = await response.text()
-            res = res[res.find(r'"dynamic"'):]
-            res = res[: res.find(r'"dimension"')]
-            match = re.search(r'\d+', res)
-            if match:  # 看是否获取到cid
-                extracted_number = match.group()
-                return extracted_number
+            res = res[res.find(r'"pages"'):]
+            start_index = res.find('"cid":') + len('"cid":')
+            end_index = res.find(',', start_index)
+            if start_index != -1 and end_index != -1:
+                cid = res[start_index: end_index]
+                return cid
+            else:
+                print("未找到cid值")
         else:
             print(f"无法访问URL: {url}")
     return -1
