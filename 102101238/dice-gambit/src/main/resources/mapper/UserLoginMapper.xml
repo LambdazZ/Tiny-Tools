@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tencent.wxcloudrun.dao.UserLoginMapper">
+
+    <resultMap id="userLoginMapper" type="com.tencent.wxcloudrun.model.UserLogin">
+        <id property="id" column="id"/>
+        <result property="token" column="token" javaType="java.lang.String"/>
+        <result property="session_key" column="session_key" javaType="java.lang.String" />
+        <result property="openid" column="openid" javaType="java.lang.String"  />
+        <result property="nickname" column="nickname" javaType="java.lang.String"  />
+        <result property="avatarurl" column="avatarurl" javaType="java.lang.String"  />
+    </resultMap>
+
+    <select id="getUserLogin" resultMap="userLoginMapper" parameterType="java.lang.Integer">
+        SELECT `id`, `token`, `session_key`, `openid`, `nickname`, `avatarurl`
+        FROM UserLogin
+        WHERE id = #{id}
+    </select>
+
+    <select id="getUserLoginByToken" resultMap="userLoginMapper" parameterType="java.lang.String">
+        SELECT `id`, `token`, `session_key`, `openid`, `nickname`, `avatarurl`
+        FROM UserLogin
+        WHERE token = #{token}
+    </select>
+
+    <delete id="clearUserLogin" parameterType="java.lang.Integer">
+        DELETE
+        FROM UserLogin
+        where id = #{id}
+            limit 1
+    </delete>
+
+    <update id="upsertUserLogin" parameterType="com.tencent.wxcloudrun.model.UserLogin">
+        INSERT INTO `UserLogin`(`id`, `token`, `session_key`, `openid`, `nickname`, `avatarurl`)
+            VALUE(#{id}, #{token}, #{session_key}, #{openid}, #{nickname}, #{avatarurl})
+        ON DUPLICATE KEY UPDATE token=#{token}
+    </update>
+
+</mapper>
