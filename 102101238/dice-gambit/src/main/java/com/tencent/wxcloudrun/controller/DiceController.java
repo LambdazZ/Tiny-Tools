@@ -2,8 +2,13 @@ package com.tencent.wxcloudrun.controller;
 
 import com.tencent.wxcloudrun.manager.DiceManager;
 import com.tencent.wxcloudrun.manager.ScoreManager;
+import com.tencent.wxcloudrun.model.Ai;
 import com.tencent.wxcloudrun.model.Dice;
 import com.tencent.wxcloudrun.model.Player;
+import com.tencent.wxcloudrun.model.impl.AiEasyImpl;
+import com.tencent.wxcloudrun.model.impl.AiHardImpl;
+import com.tencent.wxcloudrun.model.impl.AiMediumImpl;
+import lombok.Data;
 import lombok.Getter;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,11 +27,15 @@ import java.util.List;
 public class DiceController
 {
     @GetMapping(value = "/dice/local/init")
-    List<Player> getPlayers()
+    List<Player> getPlayersL()
     {
-        Player player1 = new Player();
-        Player player2 = new Player();
-        return List.of(player1, player2);
+        return getPlayers(2);
+    }
+
+    @GetMapping(value = "/dice/robot/init")
+    List<Player> getPlayersR()
+    {
+        return getPlayers(2);
     }
 
     @Getter
@@ -40,13 +49,31 @@ public class DiceController
         private Integer rate2;
         private String token1;
         private String token2;
+        private Integer robotMode;
+
+        // Getters and setters
+        // ...
+    }
+
+    @Data
+    public static class DiceReply
+    {
+        private List<Dice> diceArray1;
+        private List<Dice> diceArray2;
+        private Integer chip1;
+        private Integer chip2;
+        private Integer rate1;
+        private Integer rate2;
+        private String token1;
+        private String token2;
+        private Integer rateAdjust;
 
         // Getters and setters
         // ...
     }
 
     @PostMapping("/dice/local/roll")
-    List<List<Dice>> receiveDiceArrays(@RequestBody DiceRequest diceRequest)
+    List<List<Dice>> receiveDiceArraysL(@RequestBody DiceRequest diceRequest)
     {
         List<Dice> diceArray1 = diceRequest.getDiceArray1();
         List<Dice> diceArray2 = diceRequest.getDiceArray2();
@@ -62,6 +89,30 @@ public class DiceController
         combinedDiceArrays.add(diceArray2);
 
         return combinedDiceArrays;
+    }
+
+    @PostMapping("/dice/robot/roll")
+    DiceReply receiveDiceArraysR(@RequestBody DiceRequest diceRequest)
+    {
+        List<Dice> diceArray1 = diceRequest.getDiceArray1();
+        List<Dice> diceArray2 = diceRequest.getDiceArray2();
+
+        for (Dice dice : diceArray1)
+            dice.roll();
+
+        DiceReply diceReply = new DiceReply();
+        diceReply.setDiceArray1(diceArray1);
+        diceReply.setDiceArray2(diceArray2);
+        Ai ai = switch (diceRequest.getRobotMode())
+        {
+            case 1 -> new AiEasyImpl();
+            case 2 -> new AiMediumImpl();
+            case 4 -> new AiHardImpl();
+            default -> throw new IllegalArgumentException("Invalid robot mode: " + diceRequest.getRobotMode());
+        };
+        diceReply = ai.roll(diceReply);
+
+        return diceReply;
     }
 
     @PostMapping(value = "/dice/pattern")
@@ -94,5 +145,16 @@ public class DiceController
         res.add(player1.getChip());
         res.add(player2.getChip());
         return res;
+    }
+
+
+
+
+    public static List<Player> getPlayers(int num)
+    {
+        List<Player> players = new ArrayList<>();
+        while(num-- != 0)
+            players.add(new Player());
+        return players;
     }
 }
