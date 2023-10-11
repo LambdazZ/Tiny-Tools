@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tencent.wxcloudrun.dao.StatisticsMapper">
+
+    <resultMap id="StatisticsMapper" type="com.tencent.wxcloudrun.model.Statistics">
+        <id property="id" column="id"/>
+        <result property="token" column="token" javaType="java.lang.String"/>
+        <result property="openid" column="openid" javaType="java.lang.String" />
+        <result property="easyRobotWin" column="easyRobotWin" javaType="java.lang.Integer"  />
+        <result property="mediumRobotWin" column="mediumRobotWin" javaType="java.lang.Integer"  />
+        <result property="hardRobotWin" column="hardRobotWin" javaType="java.lang.Integer"  />
+        <result property="pattern1" column="pattern1" javaType="java.lang.Integer"  />
+        <result property="pattern2" column="pattern2" javaType="java.lang.Integer"  />
+        <result property="pattern3" column="pattern3" javaType="java.lang.Integer"  />
+        <result property="pattern4" column="pattern4" javaType="java.lang.Integer"  />
+        <result property="pattern5" column="pattern5" javaType="java.lang.Integer"  />
+        <result property="pattern6" column="pattern6" javaType="java.lang.Integer"  />
+        <result property="pattern7" column="pattern7" javaType="java.lang.Integer"  />
+        <result property="pattern8" column="pattern8" javaType="java.lang.Integer"  />
+    </resultMap>
+
+    <select id="getStatistics" resultMap="StatisticsMapper" parameterType="java.lang.Integer">
+        SELECT `id`, `token`, `openid`, `easyRobotWin`, `mediumRobotWin`, `hardRobotWin`, `pattern1`, `pattern2`, `pattern3`, `pattern4`, `pattern5`, `pattern6`, `pattern7`, `pattern8`
+        FROM Statistics
+        WHERE id = #{id}
+    </select>
+
+    <select id="getStatisticsByToken" resultMap="StatisticsMapper" parameterType="java.lang.String">
+        SELECT `id`, `token`, `openid`, `easyRobotWin`, `mediumRobotWin`, `hardRobotWin`, `pattern1`, `pattern2`, `pattern3`, `pattern4`, `pattern5`, `pattern6`, `pattern7`, `pattern8`
+        FROM Statistics
+        WHERE token = #{token}
+    </select>
+
+    <delete id="clearStatistics" parameterType="java.lang.Integer">
+        DELETE
+        FROM Statistics
+        where id = #{id}
+            limit 1
+    </delete>
+
+    <insert id="insertStatistics" parameterType="com.tencent.wxcloudrun.model.Statistics">
+        INSERT INTO `Statistics`(`id`, `token`, `openid`, `easyRobotWin`, `mediumRobotWin`, `hardRobotWin`, `pattern1`, `pattern2`, `pattern3`, `pattern4`, `pattern5`, `pattern6`, `pattern7`, `pattern8`)
+            VALUE(#{id}, #{token}, #{openid}, #{easyRobotWin}, #{mediumRobotWin}, #{hardRobotWin}, #{pattern1}, #{pattern2}, #{pattern3}, #{pattern4}, #{pattern5}, #{pattern6}, #{pattern7}, #{pattern8})
+    </insert>
+
+    <update id="updateStatistics" parameterType="com.tencent.wxcloudrun.model.Statistics">
+        UPDATE `Statistics`
+        SET
+            easyRobotWin = easyRobotWin + #{easyRobotWin},
+            mediumRobotWin = mediumRobotWin + #{mediumRobotWin},
+            hardRobotWin = hardRobotWin + #{hardRobotWin},
+            pattern1 = pattern1 + #{pattern1},
+            pattern2 = pattern2 + #{pattern2},
+            pattern3 = pattern3 + #{pattern3},
+            pattern4 = pattern4 + #{pattern4},
+            pattern5 = pattern5 + #{pattern5},
+            pattern6 = pattern6 + #{pattern6},
+            pattern7 = pattern7 + #{pattern7},
+            pattern8 = pattern8 + #{pattern8}
+        WHERE
+            id = #{id} AND
+            token = #{token} AND
+    </update>
+</mapper>
