@@ -4,6 +4,7 @@ package com.tencent.wxcloudrun.manager;
 import com.tencent.wxcloudrun.model.Dice;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.IntStream;
 
 /**
@@ -121,5 +122,13 @@ public class DiceManager
             case "三连牌", "双对牌" -> {return 10 + basic;}
             default -> {return basic;}
         }
+    }
+
+    public static int getScore(List<Dice> diceArray)
+    {
+        Dice[] dices = new Dice[5];
+        for(int i = 0; i < 5; ++i)
+            dices[i] = diceArray.get(i);
+        return getScore(dices);
     }
 }
