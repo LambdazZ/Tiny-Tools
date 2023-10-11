@@ -80,17 +80,33 @@ public class AiHardImpl implements Ai
         for(int i = 0; i < 5; ++i)
             dices[i] = diceArray.get(i);
         Arrays.sort(dices, Comparator.comparing(Dice::isModifiable));
-        if(DiceManager.getScore(dices) >= 41)
+//        if(DiceManager.getScore(dices) >= 41)
+//            diceReply.setRateAdjust(3);
+//        else if(DiceManager.getScore(dices) >= 31.5)
+//            diceReply.setRateAdjust(2);
+//        else if(DiceManager.getScore(dices) >= 28)
+//            diceReply.setRateAdjust(1);
+//        else if(DiceManager.getScore(dices) <= 17)
+//            diceReply.setRateAdjust(-3);
+//        else if(DiceManager.getScore(dices) <= 19)
+//            diceReply.setRateAdjust(-2);
+//        else if(DiceManager.getScore(dices) <= 21)
+//            diceReply.setRateAdjust(-1);
+
+        double userScore = DiceManager.getScore(diceReply.getDiceArray1());
+        double maximum = DiceManager.getScore(dices);
+        double diff = maximum - userScore;
+        if(diff >= 20)
             diceReply.setRateAdjust(3);
-        else if(DiceManager.getScore(dices) >= 31.5)
+        else if(diff >= 12)
             diceReply.setRateAdjust(2);
-        else if(DiceManager.getScore(dices) >= 28)
+        else if(diff >= 8)
             diceReply.setRateAdjust(1);
-        else if(DiceManager.getScore(dices) <= 17)
+        else if(diff <= -20)
             diceReply.setRateAdjust(-3);
-        else if(DiceManager.getScore(dices) <= 19)
+        else if(diff <= -12)
             diceReply.setRateAdjust(-2);
-        else if(DiceManager.getScore(dices) <= 21)
+        else if(diff <= -8)
             diceReply.setRateAdjust(-1);
 
         int index = 0;
@@ -104,7 +120,7 @@ public class AiHardImpl implements Ai
         int base = 0;
         for(int i = 0; i < index; ++i)
             base += dices[i].getFace() * L[i];
-        double maximum = DiceManager.getScore(dices);
+
         //System.out.println(maximum);
         switch (index)
         {
