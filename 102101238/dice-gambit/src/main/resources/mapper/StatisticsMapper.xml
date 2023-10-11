@@ -59,6 +59,6 @@
             pattern8 = pattern8 + #{pattern8}
         WHERE
             id = #{id} AND
-            token = #{token} AND
+            token = #{token}
     </update>
 </mapper>
