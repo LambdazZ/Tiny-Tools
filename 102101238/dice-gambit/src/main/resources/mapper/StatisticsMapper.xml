@@ -58,7 +58,6 @@
             pattern7 = pattern7 + #{pattern7},
             pattern8 = pattern8 + #{pattern8}
         WHERE
-            id = #{id} AND
             token = #{token}
     </update>
 </mapper>
