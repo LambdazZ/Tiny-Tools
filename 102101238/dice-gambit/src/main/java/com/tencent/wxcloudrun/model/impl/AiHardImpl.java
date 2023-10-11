@@ -99,15 +99,19 @@ public class AiHardImpl implements Ai
                 break;
             else
                 ++index;
+        //System.out.println(index);
         boolean[] modifiable = new boolean[5];
         int base = 0;
         for(int i = 0; i < index; ++i)
             base += dices[i].getFace() * L[i];
         double maximum = DiceManager.getScore(dices);
+        //System.out.println(maximum);
         switch (index)
         {
             case 0 ->
             {
+                //System.out.println("case 0");
+                //System.out.println(Arrays.toString(modifiable));
                 if(maximum <= expectations[base])
                     modifiable[0] = modifiable[1] = modifiable[2] = modifiable[3] = modifiable[4] = true;
 
@@ -116,8 +120,8 @@ public class AiHardImpl implements Ai
                     {
                         maximum = expectations[base + dices[i].getFace() * L[index]];
                         for(int j = index; j < 5; ++j)
-                            modifiable[j] = false;
-                        modifiable[i] = true;
+                            modifiable[j] = true;
+                        modifiable[i] = false;
                     }
 
                 for(int i = index; i < 4; ++ i)
@@ -149,6 +153,8 @@ public class AiHardImpl implements Ai
                         }
                     }
 
+                //System.out.println(Arrays.toString(modifiable));
+
                 for(int i = index; i < 5; ++i)
                 {
                     int tmpIndex = base;
@@ -160,10 +166,12 @@ public class AiHardImpl implements Ai
                     {
                         maximum = expectations[tmpIndex];
                         for(int j = index; j < 5; ++j)
-                            modifiable[j] = true;
-                        modifiable[i] = false;
+                            modifiable[j] = false;
+                        modifiable[i] = true;
                     }
                 }
+
+                //System.out.println(Arrays.toString(modifiable));
             }
             case 1 ->
             {
@@ -174,8 +182,8 @@ public class AiHardImpl implements Ai
                     {
                         maximum = expectations[base + dices[i].getFace() * L[index]];
                         for(int j = index; j < 5; ++j)
-                            modifiable[j] = false;
-                        modifiable[i] = true;
+                            modifiable[j] = true;
+                        modifiable[i] = false;
                     }
 
                 for(int i = index; i < 4; ++ i)
@@ -201,8 +209,8 @@ public class AiHardImpl implements Ai
                     {
                         maximum = expectations[tmpIndex];
                         for(int j = index; j < 5; ++j)
-                            modifiable[j] = true;
-                        modifiable[i] = false;
+                            modifiable[j] = false;
+                        modifiable[i] = true;
                     }
                 }
             }
@@ -215,8 +223,8 @@ public class AiHardImpl implements Ai
                     {
                         maximum = expectations[base + dices[i].getFace() * L[index]];
                         for(int j = index; j < 5; ++j)
-                            modifiable[j] = false;
-                        modifiable[i] = true;
+                            modifiable[j] = true;
+                        modifiable[i] = false;
                     }
                 for(int i = index; i < 5; ++i)
                 {
@@ -229,8 +237,8 @@ public class AiHardImpl implements Ai
                     {
                         maximum = expectations[tmpIndex];
                         for(int j = index; j < 5; ++j)
-                            modifiable[j] = true;
-                        modifiable[i] = false;
+                            modifiable[j] = false;
+                        modifiable[i] = true;
                     }
                 }
             }
@@ -242,8 +250,8 @@ public class AiHardImpl implements Ai
                     if(maximum <= expectations[base + dices[i].getFace() * L[index]])
                     {
                         maximum = expectations[base + dices[i].getFace() * L[index]];
-                        modifiable[i] = true;
-                        modifiable[7 - i] = false;
+                        modifiable[i] = false;
+                        modifiable[7 - i] = true;
                     }
             }
             case 4 ->
@@ -264,5 +272,15 @@ public class AiHardImpl implements Ai
             dice.roll();
 
         return diceReply;
+    }
+
+    public static void main(String[] args)
+    {
+        DiceController.DiceReply diceReply = new DiceController.DiceReply();
+        diceReply.setDiceArray2(List.of(new Dice(1), new Dice(1), new Dice(1), new Dice(1), new Dice(2)));
+        new AiHardImpl().roll(diceReply);
+        System.out.println(diceReply.getDiceArray2());
+        //System.out.println(expectations[2 * L0 + 1 * L1 + 1 * L2 + 1 * L3 + 1 * L4]);
+        //System.out.println(expectations[2]);
     }
 }
