@@ -31,6 +31,9 @@ public class StatisticsController
     @PostMapping(value = "/statistics/update")
     void updateStatistics(@RequestBody Statistics statistics)
     {
+        if(!statisticsService.getStatisticsByToken(statistics.getToken()).isPresent())
+            insert(statistics.getToken(), "");
+
         statisticsService.updateStatistics(statistics);
     }
 
@@ -39,24 +42,27 @@ public class StatisticsController
     {
         Optional<Statistics> statisticsByToken = statisticsService.getStatisticsByToken(token);
         if(!statisticsByToken.isPresent())
-        {
-            Statistics statistics = new Statistics();
-            statistics.setToken(token);
-            statistics.setOpenid(openid);
-            statistics.setEasyRobotWin(0);
-            statistics.setMediumRobotWin(0);
-            statistics.setHardRobotWin(0);
-            statistics.setPattern1(0);
-            statistics.setPattern2(0);
-            statistics.setPattern3(0);
-            statistics.setPattern4(0);
-            statistics.setPattern5(0);
-            statistics.setPattern6(0);
-            statistics.setPattern7(0);
-            statistics.setPattern8(0);
-            statisticsService.insertStatistics(statistics);
-        }
+            insert(token, openid);
 
         return statisticsService.getStatisticsByToken(token).get();
+    }
+
+    void insert(String token, String openid)
+    {
+        Statistics statistics = new Statistics();
+        statistics.setToken(token);
+        statistics.setOpenid(openid);
+        statistics.setEasyRobotWin(0);
+        statistics.setMediumRobotWin(0);
+        statistics.setHardRobotWin(0);
+        statistics.setPattern1(0);
+        statistics.setPattern2(0);
+        statistics.setPattern3(0);
+        statistics.setPattern4(0);
+        statistics.setPattern5(0);
+        statistics.setPattern6(0);
+        statistics.setPattern7(0);
+        statistics.setPattern8(0);
+        statisticsService.insertStatistics(statistics);
     }
 }
