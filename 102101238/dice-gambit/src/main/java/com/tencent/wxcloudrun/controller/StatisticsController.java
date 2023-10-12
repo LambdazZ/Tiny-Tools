@@ -20,12 +20,10 @@ import java.util.Optional;
 public class StatisticsController
 {
     final StatisticsService statisticsService;
-    final Logger logger;
 
     public StatisticsController(@Autowired StatisticsService statisticsService)
     {
         this.statisticsService = statisticsService;
-        this.logger = LoggerFactory.getLogger(CounterController.class);
     }
 
     @PostMapping(value = "/statistics/update")
