@@ -292,11 +292,50 @@ public class AiHardImpl implements Ai
 
     public static void main(String[] args)
     {
+        // 测试骰子得分较低的测试数据
+        DiceController.DiceReply diceReply1 = new DiceController.DiceReply();
+        diceReply1.setDiceArray1(List.of(new Dice(1), new Dice(2), new Dice(3), new Dice(4), new Dice(5)));
+        diceReply1.setDiceArray2(List.of(new Dice(1), new Dice(1), new Dice(1), new Dice(1), new Dice(2)));
+        System.out.println(diceReply1.getDiceArray2());
+
+        // 测试期望值较高的测试数据
+        DiceController.DiceReply diceReply2 = new DiceController.DiceReply();
+        diceReply2.setDiceArray1(List.of(new Dice(6), new Dice(6), new Dice(6), new Dice(6), new Dice(6)));
+        diceReply2.setDiceArray2(List.of(new Dice(1), new Dice(2), new Dice(3), new Dice(5), new Dice(4)));
+        System.out.println(diceReply2.getDiceArray2());
+
+        // 测试骰子组合（五连牌）的测试数据
+        DiceController.DiceReply diceReply3 = new DiceController.DiceReply();
+        diceReply3.setDiceArray1(List.of(new Dice(1), new Dice(2), new Dice(3), new Dice(4), new Dice(5)));
+        diceReply3.setDiceArray2(List.of(new Dice(1), new Dice(1), new Dice(2), new Dice(2), new Dice(3)));
+        System.out.println(diceReply3.getDiceArray2());
+
         DiceController.DiceReply diceReply = new DiceController.DiceReply();
+        diceReply.setDiceArray1(List.of(new Dice(3), new Dice(6), new Dice(1), new Dice(2), new Dice(2)));
         diceReply.setDiceArray2(List.of(new Dice(1), new Dice(1), new Dice(1), new Dice(1), new Dice(2)));
         new AiHardImpl().roll(diceReply);
         System.out.println(diceReply.getDiceArray2());
-        //System.out.println(expectations[2 * L0 + 1 * L1 + 1 * L2 + 1 * L3 + 1 * L4]);
-        //System.out.println(expectations[2]);
+        diceReply.setDiceArray2(List.of(new Dice(2, false), new Dice(1), new Dice(1), new Dice(1), new Dice(2)));
+        new AiHardImpl().roll(diceReply);
+        System.out.println(diceReply.getDiceArray2());
+        diceReply.setDiceArray2(List.of(new Dice(3, false), new Dice(2, false), new Dice(1), new Dice(1), new Dice(2)));
+        new AiHardImpl().roll(diceReply);
+        System.out.println(diceReply.getDiceArray2());
+        diceReply.setDiceArray2(List.of(new Dice(4, false), new Dice(3, false), new Dice(2, false), new Dice(1), new Dice(2)));
+        new AiHardImpl().roll(diceReply);
+        System.out.println(diceReply.getDiceArray2());
+        diceReply.setDiceArray2(List.of(new Dice(5, false), new Dice(4, false), new Dice(3, false), new Dice(5, false), new Dice(2)));
+        new AiHardImpl().roll(diceReply);
+        System.out.println(diceReply.getDiceArray2());
+        diceReply.setDiceArray2(List.of(new Dice(6), new Dice(1), new Dice(4), new Dice(2), new Dice(5)));
+        new AiHardImpl().roll(diceReply);
+        System.out.println(diceReply.getDiceArray2());
+        diceReply.setDiceArray2(List.of(new Dice(1, false), new Dice(3), new Dice(5), new Dice(4), new Dice(3)));
+        new AiHardImpl().roll(diceReply);
+        System.out.println(diceReply.getDiceArray2());
+        diceReply.setDiceArray1(List.of(new Dice(6), new Dice(6), new Dice(6), new Dice(6), new Dice(6)));
+        diceReply.setDiceArray2(List.of(new Dice(1), new Dice(2), new Dice(3), new Dice(5), new Dice(4)));
+        new AiHardImpl().roll(diceReply);
+        System.out.println(diceReply.getDiceArray2());
     }
 }
