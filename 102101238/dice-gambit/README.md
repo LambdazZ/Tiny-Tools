@@ -1,24 +1,32 @@
 # wxcloudrun-springboot
-[![GitHub license](https://img.shields.io/github/license/WeixinCloud/wxcloudrun-express)](https://github.com/WeixinCloud/wxcloudrun-express)
 ![GitHub package.json dependency version (prod)](https://img.shields.io/badge/maven-3.6.0-green)
 ![GitHub package.json dependency version (prod)](https://img.shields.io/badge/jdk-11-green)
 
-微信云托管 Java Springboot 框架模版，实现简单的计数器读写接口，使用云托管 MySQL 读写、记录计数值。
+基于微信云托管 Java Springboot 框架模版开发的快艇Dice小程序后端。
 
-![](https://qcloudimg.tencent-cloud.cn/raw/be22992d297d1b9a1a5365e606276781.png)
+## 小程序界面
 
+### 初始界面
 
-## 快速开始
-前往 [微信云托管快速开始页面](https://developers.weixin.qq.com/miniprogram/dev/wxcloudrun/src/basic/guide.html)，选择相应语言的模板，根据引导完成部署。
+![](./imgs/lobby.png #center)
 
-## 本地调试
-下载代码在本地调试，请参考[微信云托管本地调试指南](https://developers.weixin.qq.com/miniprogram/dev/wxcloudrun/src/guide/debug/)。
+### 人机对战界面
 
-## 实时开发
-代码变动时，不需要重新构建和启动容器，即可查看变动后的效果。请参考[微信云托管实时开发指南](https://developers.weixin.qq.com/miniprogram/dev/wxcloudrun/src/guide/debug/dev.html)
+<img src="./imgs/robot.png #center" style="zoom:50%;" />
 
-## Dockerfile最佳实践
-请参考[如何提高项目构建效率](https://developers.weixin.qq.com/miniprogram/dev/wxcloudrun/src/scene/build/speed.html)
+### 本地对战界面
+
+<img src="./imgs//local.png #center" style="zoom:50%;" />
+
+### 统计界面
+
+<img src="./imgs/statistics.png #center" style="zoom:50%;" />
+
+### 规则界面
+
+<img src="./imgs/rule1.png #center" style="zoom:50%;" />
+
+<img src="./imgs/rule2.png #center" style="zoom:50%;" />
 
 ## 目录结构说明
 ~~~
@@ -41,9 +49,9 @@
 
 ## 服务 API 文档
 
-### `GET /api/count`
+### `GET /dice/local/init`
 
-获取当前计数
+本地对战初始化
 
 #### 请求参数
 
@@ -51,72 +59,160 @@
 
 #### 响应结果
 
-- `code`：错误码
-- `data`：当前计数值
-
-##### 响应结果示例
-
-```json
-{
-  "code": 0,
-  "data": 42
-}
-```
-
-#### 调用示例
-
-```
-curl https://<云托管服务域名>/api/count
-```
+- `List<Player>`：玩家列表
 
 
 
-### `POST /api/count`
+### `GET /dice/robot/init`
 
-更新计数，自增或者清零
+人机对战初始化
 
 #### 请求参数
 
-- `action`：`string` 类型，枚举值
-  - 等于 `"inc"` 时，表示计数加一
-  - 等于 `"clear"` 时，表示计数重置（清零）
-
-##### 请求参数示例
-
-```
-{
-  "action": "inc"
-}
-```
+无
 
 #### 响应结果
 
-- `code`：错误码
-- `data`：当前计数值
+- `List<Player>`：玩家列表
 
-##### 响应结果示例
+  
 
-```json
-{
-  "code": 0,
-  "data": 42
-}
-```
 
-#### 调用示例
+### `POST /dice/local/roll`
 
-```
-curl -X POST -H 'content-type: application/json' -d '{"action": "inc"}' https://<云托管服务域名>/api/count
-```
+本地对战摇骰子
 
-## 使用注意
-如果不是通过微信云托管控制台部署模板代码，而是自行复制/下载模板代码后，手动新建一个服务并部署，需要在「服务设置」中补全以下环境变量，才可正常使用，否则会引发无法连接数据库，进而导致部署失败。
-- MYSQL_ADDRESS
-- MYSQL_PASSWORD
-- MYSQL_USERNAME
-以上三个变量的值请按实际情况填写。如果使用云托管内MySQL，可以在控制台MySQL页面获取相关信息。
+#### 请求参数
+
+- `DiceRequest`: 包含两个骰子信息的请求
+
+#### 响应结果
+
+- `List<List<Dice>>`：骰子列表的列表
+
+  
+
+
+### `POST /dice/robot/roll`
+
+本地对战摇骰子
+
+#### 请求参数
+
+- `DiceRequest`: 包含两个骰子信息的请求
+
+#### 响应结果
+
+- `DiceReply`：包含两个骰子和人机加减倍率机制的响应
+
+  
+
+
+### `POST /dice/pattern`
+
+获取牌型
+
+#### 请求参数
+
+- `DiceRequest`: 包含两个骰子信息的请求
+
+#### 响应结果
+
+- `List<String>`： 牌型列表
+
+  
+
+
+### `POST /dice/updateChip`
+
+更新筹码
+
+#### 请求参数
+
+- `DiceRequest`: 包含两个骰子信息的请求
+
+#### 响应结果
+
+- `List<Integer>` ：筹码列表
+
+
+
+### `POST /statistics/update`
+
+更新统计信息
+
+#### 请求参数
+
+- `Statistics`: 更新信息
+
+#### 响应结果
+
+无
+
+
+
+
+### `GET /statistics/get`
+
+获取统计信息
+
+#### 请求参数
+
+- `String token`: 用户token
+- `String openid`: 用户openid
+
+#### 响应结果
+
+- `Statistics`: 统计信息
+
+
+
+### `GET /isLogin`
+
+检测当前用户是否为第一次登录
+
+#### 请求参数
+
+- `String token`: 用户token
+
+#### 响应结果
+
+- `boolean`: 用户是否登录
+
+  
+
+
+### `GET /login`
+
+将第一次登录的用户信息存入数据库并返回其token
+
+#### 请求参数
+
+- `String code`: 用户小程序返回的code
+- `String nickname`:用户昵称
+- `String avatarurl`: 用户头像url
+
+#### 响应结果
+
+- `String token`:给用户的token
+
+
+
+### `GET /getProfile`
+
+获取用户信息
+
+#### 请求参数
+
+- `String token`: 用户token
+
+#### 响应结果
+
+- `UserLogin`:用户存在数据库的个人信息
+
+
 
 
 ## License
 
-[MIT](./LICENSE)
+本程序使用 GNU General Public License v3.0 许可证。详情请参阅 [LICENSE](../../LICENSE) 文件。
