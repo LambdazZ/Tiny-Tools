@@ -8,25 +8,25 @@
 
 ### 初始界面
 
-![](./imgs/lobby.png #center)
+![](./imgs/lobby.png#center)
 
 ### 人机对战界面
 
-<img src="./imgs/robot.png #center" style="zoom:50%;" />
+<img src="./imgs/robot.png#center" style="zoom:50%;" />
 
 ### 本地对战界面
 
-<img src="./imgs//local.png #center" style="zoom:50%;" />
+<img src="./imgs//local.png#center" style="zoom:50%;" />
 
 ### 统计界面
 
-<img src="./imgs/statistics.png #center" style="zoom:50%;" />
+<img src="./imgs/statistics.png#center" style="zoom:50%;" />
 
 ### 规则界面
 
-<img src="./imgs/rule1.png #center" style="zoom:50%;" />
+<img src="./imgs/rule1.png#center" style="zoom:50%;" />
 
-<img src="./imgs/rule2.png #center" style="zoom:50%;" />
+<img src="./imgs/rule2.png#center" style="zoom:50%;" />
 
 ## 目录结构说明
 ~~~
