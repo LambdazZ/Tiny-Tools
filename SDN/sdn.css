@@ -1,0 +1,322 @@
+.index
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #EAEEF0;
+}
+
+.sdn-title
+{
+    position: fixed;
+    width: 100vw;
+    height: 6vh;
+    
+    font-family: 'STXinwei';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 3.5vw;
+    line-height: 3.8vh;
+    text-align: center;
+    
+    color: #000000;
+}
+
+.title-line
+{
+    position: absolute;
+    width: 100vw;
+    height: 0px;
+    top: 13vh;
+    
+    border: 0.3vh solid #85B6FF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.topo
+{
+    position: fixed;
+    top: 20vh;
+    left: 5vw;
+    width: 40vw;
+    height: 73vh;
+    
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 13px;
+}
+
+.topo-title
+{
+    position: absolute;
+    width: 40vw;
+    height: 4.8vh;
+    top: 0.5vh;
+    
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 2.7vw;
+    line-height: 4.8vh;
+    text-align: center;
+    
+    color: #000000;    
+}
+
+.topo-text1
+{
+    position: absolute;
+    width: 18vw;
+    height: 5vh;
+    top: 10vh;
+
+    font-family: 'STXinwei';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 2vw;
+    line-height: 3vh;
+    text-align: center;
+
+    color: #000000;
+}
+
+.topo-text2
+{
+    position: absolute;
+    width: 18vw;
+    height: 3vh;
+    top: 18vh;
+
+    font-family: 'STXinwei';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 2vw;
+    line-height: 3vh;
+    text-align: center;
+
+    color: #000000;
+}
+
+.topo-text3
+{
+    position: absolute;
+    width: 18vw;
+    height: 3vh;
+    top: 26vh;
+
+    font-family: 'STXinwei';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 2vw;
+    line-height: 3vh;
+    text-align: center;
+
+    color: #000000;
+}
+
+/* .topo-text4
+{
+    position: absolute;
+    width: 18vw;
+    height: 5vh;
+    left: 22vw;
+    top: 10vh;
+
+    font-family: 'STXinwei';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 2vw;
+    line-height: 3vh;
+    text-align: center;
+
+    color: #000000;
+} */
+
+.topo-graphic
+{
+    position: absolute;
+    width: 35vw;
+    height: 32vh;
+    left: 10vw;
+    top: 10vh;
+    font-size: 2vw;
+    align-items: center;
+}
+
+.topo-ryu
+{
+    position: absolute;
+    width: 35vw;
+    height: 36vh;
+    left: 2.5vw;
+    top: 35vh;
+    font-size: 2vw;
+    align-items: center;
+    border-radius: 10px;
+    
+    /* background-color: #000000; */
+}
+
+.iframe-container 
+{
+    width: 100%;
+    height: 100%;
+    border: none; 
+    margin: 0; 
+    padding: 0;
+}
+
+.flow
+{
+    position: fixed;
+    top: 20vh;
+    left: 48vw;
+    width: 42vw;
+    height: 35vh;
+    
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 13px;
+}
+
+.flow-title
+{
+    position: absolute;
+    width: 42vw;
+    height: 4.8vh;
+    top: 0.5vh;
+    
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.4vw;
+    line-height: 2.4vh;
+    text-align: center;
+    
+    color: #000000;    
+}
+
+.flow-graphic
+{
+    position: absolute;
+    width: 42vw;
+    height: 30vh;
+    top: 5vh;
+    font-size: 2vw;
+    align-items: center;
+}
+
+.data-detail
+{
+    position: fixed;
+    top: 58vh;
+    left: 48vw;
+    width: 42vw;
+    height: 35vh;
+    
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 13px;
+}
+
+.data-detail-title
+{
+    position: absolute;
+    width: 42vw;
+    height: 4.8vh;
+    top: 0.5vh;
+    
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.4vw;
+    line-height: 2.4vh;
+    text-align: center;
+    
+    color: #000000;    
+}
+
+.security
+{
+    position: fixed;
+    width: 12vh;
+    height: 10vh;
+    left: 92vw;
+    top: 51.5vh;
+
+    cursor: pointer;
+    /* background: #FFFFFF; */
+}
+
+.security-svg1
+{
+    position: absolute;
+    width: 10vh;
+    height: 10vh;
+}
+
+.security-svg2
+{
+    position: absolute;
+    width: 10vh;
+    height: 10vh;
+}
+
+.security-svg3
+{
+    position: absolute;
+    width: 10vh;
+    height: 7vh;
+    left: 6vh;
+    top: 1.5vh;
+}
+
+.table-container 
+{
+    position: absolute;
+    width: 38vw;
+    height: 27vh;
+    left: 2vw;;
+    top: 6vh;
+    border-radius: 10px;
+
+    overflow: auto;
+}
+
+table 
+{
+    background-color: #FFFFFF;
+    width: 100%;
+    text-align: center;
+    border-spacing: 0;
+    border-radius: inherit;
+    border: solid 2px #dfdfdf;
+}
+
+th, td
+{
+    border-top: 2px solid #dfdfdf;
+    height: 30px;
+    text-align: center;
+}
+
+th 
+{
+    background-color: #f2f2f2;
+    position: sticky; /* 固定表头 */
+    top: 0; /* 固定表头位置 */
+    z-index: 1; /* 提高层级，使表头显示在顶部 */
+}
+
+th:last-child, td:last-child 
+{
+    border-right-color: transparent;
+}
+
+::-webkit-scrollbar 
+{
+    width: 0;
+    height: 0;
+}

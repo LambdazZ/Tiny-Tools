@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>SDN</title>
+        <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+        <script src="./detail.js"></script>
+        <link rel="stylesheet" type="text/css" href="./sdn.css">
+    </head>
+    <body>
+        <div class="index">
+            <h1 class="sdn-title">SDN校园安全检测平台</h1>
+            <img src="path/to/your/svg.svg" class="title-line" alt="error">
+        </div>
+        <div class="topo">
+            <h1 class="topo-title">拓扑视图</h1>
+            <h2 class="topo-text1">主机数: <span id="host-placeholder"></span></h2>
+            <h2 class="topo-text2">交换机数: <span id="switch-placeholder"></h2>
+            <h2 class="topo-text3">链路数: <span id="link-placeholder"></h2>
+            <!-- <h2 class="topo-text4">带宽速率</h2> -->
+            <div id="gauge" class="topo-graphic">
+                <script src="./topo.js"></script>
+            </div>
+            <div class="topo-ryu">
+                <iframe src="https://www.example.com" class="iframe-container"></iframe><!--此处修改为ryu界面url-->
+            </div>
+        </div>
+        <div class="flow">
+            <h1 class="flow-title">流量统计概览</h1>
+            <div id="nightingale" class="flow-graphic">
+                <script src="./flow.js"></script>
+            </div>
+        </div>
+        <div class="data-detail">
+            <h1 class="data-detail-title">详细数据</h1>
+            <div class="table-container">
+                <table id="data-table">
+                    <thead>
+                        <tr>
+                            <th>源IP</th>
+                            <th>目的IP</th>
+                            <th>源端口</th>
+                            <th>目的端口</th>
+                            <th>传输层协议</th>
+                            <th>出现次数</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="security" onclick="window.location.href='https://www.example.com';"><!--此处修改为另一界面url-->
+            <img src="./imgaes/security/1.svg" class="security-svg1" alt="error">
+            <img src="./imgaes/security/2.svg" class="security-svg2" alt="error">
+            <img src="./imgaes/security/3.svg" class="security-svg3" alt="error">
+        </div>
+    </body>
+</html>
