@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bitasync.statistics.dao.StatisticsMapper">
+    <resultMap id="StatisticsMapper" type="com.bitasync.statistics.model.Statistics">
+        <id property="id" column="id"/>
+        <result property="token" column="token" javaType="java.lang.String"/>
+        <result property="escapes" column="escapes" javaType="java.lang.Integer"  />
+        <result property="timeouts" column="timeouts" javaType="java.lang.Integer"  />
+        <result property="totalOrders" column="totalOrders" javaType="java.lang.Integer"  />
+        <result property="positiveReviews" column="positiveReviews" javaType="java.lang.Integer"  />
+        <result property="negativeReviews" column="negativeReviews" javaType="java.lang.Integer"  />
+    </resultMap>
+
+    <select id="getStatistics" resultMap="StatisticsMapper" parameterType="java.lang.Integer">
+        SELECT `id`, `token`, `escapes`, `timeouts`, `totalOrders`, `positiveReviews`, `negativeReviews`
+        FROM statistics
+        WHERE id = #{id}
+    </select>
+
+    <select id="getStatisticsByToken" resultMap="StatisticsMapper" parameterType="java.lang.String">
+        SELECT `id`, `token`, `escapes`, `timeouts`, `totalOrders`, `positiveReviews`, `negativeReviews`
+        FROM statistics
+        WHERE token = #{token}
+    </select>
+</mapper>
