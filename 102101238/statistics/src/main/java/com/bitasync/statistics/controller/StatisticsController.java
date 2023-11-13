@@ -91,6 +91,23 @@ public class StatisticsController
         return ApiResponse.ok(200);
     }
 
+    @PostMapping(value = "/statistics/incTotalOrders")
+    @CrossOrigin(origins = "http://127.0.0.1:5500")
+    ApiResponse incTotalOrders(@RequestBody Statistics statistics)
+    {
+        Optional<Statistics> res = statisticsService.getStatisticsByToken(statistics.getToken());
+        if(res.isEmpty())
+            return ApiResponse.error(404, "请求的对象不存在");
+
+        statistics.setEscapes(0);
+        statistics.setTimeouts(0);
+        statistics.setTotalOrders(1);
+        statistics.setPositiveReviews(0);
+        statistics.setNegativeReviews(0);
+        statisticsService.updateStatistics(statistics);
+        return ApiResponse.ok(200);
+    }
+
     void insert(String token)
     {
         Statistics statistics = new Statistics();
