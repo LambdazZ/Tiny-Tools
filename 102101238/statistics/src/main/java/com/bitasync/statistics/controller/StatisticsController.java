@@ -23,6 +23,18 @@ public class StatisticsController
         this.statisticsService = statisticsService;
     }
 
+    @PostMapping(value = "/statistics/create")
+    @CrossOrigin(origins = "http://127.0.0.1:5500")
+    ApiResponse create(@RequestBody Statistics statistics)
+    {
+        Optional<Statistics> res = statisticsService.getStatisticsByToken(statistics.getToken());
+        if(res.isPresent())
+            return ApiResponse.error(404, "目标已存在");
+
+        insert(statistics.getToken());
+        return ApiResponse.ok(200);
+    }
+
     @PostMapping(value = "/statistics/get")
     @CrossOrigin(origins = "http://127.0.0.1:5500")
     @ResponseBody
