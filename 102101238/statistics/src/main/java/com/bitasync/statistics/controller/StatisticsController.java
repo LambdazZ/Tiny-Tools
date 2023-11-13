@@ -27,9 +27,17 @@ public class StatisticsController
 
     @PostMapping(value = "/statistics/get")
     @CrossOrigin(origins = "http://127.0.0.1:5500")
+    @ResponseBody
     Statistics getStatistics(@RequestBody Statistics statistics)
     {
-        System.out.println(statistics.getId());
-        return statisticsService.getStatistics((Integer) statistics.getId()).get();
+        return statisticsService.getStatistics(statistics.getId()).get();
+    }
+
+    @PostMapping(value = "/statistics/getByToken")
+    @CrossOrigin(origins = "http://127.0.0.1:5500")
+    @ResponseBody
+    Statistics getStatisticsByToken(@RequestBody Statistics statistics)
+    {
+        return statisticsService.getStatisticsByToken(statistics.getToken()).get();
     }
 }
