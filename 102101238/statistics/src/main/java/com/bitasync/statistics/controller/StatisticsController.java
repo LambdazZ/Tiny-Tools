@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Optional;
 
 /**
@@ -69,89 +71,30 @@ public class StatisticsController
         return ApiResponse.ok(200);
     }
 
-    @PostMapping(value = "/statistics/incEscapes")
+    @PostMapping(value = "/statistics/inc")
     @CrossOrigin(origins = "http://127.0.0.1:5500")
-    ApiResponse incEscapes(@RequestBody Statistics statistics)
+    public ApiResponse updateStatistic(@RequestBody Statistics statistics, @RequestParam String fieldName)
     {
         Optional<Statistics> res = statisticsService.getStatisticsByToken(statistics.getToken());
-        if(res.isEmpty())
+        if (res.isEmpty())
             return ApiResponse.error(404, "请求的对象不存在");
 
-        statistics.setEscapes(1);
-        statistics.setTimeouts(0);
-        statistics.setTotalOrders(0);
-        statistics.setPositiveReviews(0);
-        statistics.setNegativeReviews(0);
-        statisticsService.updateStatistics(statistics);
-        return ApiResponse.ok(200);
-    }
+        try
+        {
+            resetFields(statistics);
 
-    @PostMapping(value = "/statistics/incTimeouts")
-    @CrossOrigin(origins = "http://127.0.0.1:5500")
-    ApiResponse incTimeouts(@RequestBody Statistics statistics)
-    {
-        Optional<Statistics> res = statisticsService.getStatisticsByToken(statistics.getToken());
-        if(res.isEmpty())
-            return ApiResponse.error(404, "请求的对象不存在");
+            String setterName = "set" + Character.toUpperCase(fieldName.charAt(0)) + fieldName.substring(1);
+            Method setterMethod = Statistics.class.getMethod(setterName, Integer.class);
+            setterMethod.invoke(statistics, 1);
 
-        statistics.setEscapes(0);
-        statistics.setTimeouts(1);
-        statistics.setTotalOrders(0);
-        statistics.setPositiveReviews(0);
-        statistics.setNegativeReviews(0);
-        statisticsService.updateStatistics(statistics);
-        return ApiResponse.ok(200);
-    }
+            statisticsService.updateStatistics(statistics);
+            return ApiResponse.ok(200);
 
-    @PostMapping(value = "/statistics/incTotalOrders")
-    @CrossOrigin(origins = "http://127.0.0.1:5500")
-    ApiResponse incTotalOrders(@RequestBody Statistics statistics)
-    {
-        Optional<Statistics> res = statisticsService.getStatisticsByToken(statistics.getToken());
-        if(res.isEmpty())
-            return ApiResponse.error(404, "请求的对象不存在");
-
-        statistics.setEscapes(0);
-        statistics.setTimeouts(0);
-        statistics.setTotalOrders(1);
-        statistics.setPositiveReviews(0);
-        statistics.setNegativeReviews(0);
-        statisticsService.updateStatistics(statistics);
-        return ApiResponse.ok(200);
-    }
-
-    @PostMapping(value = "/statistics/incPositiveReviews")
-    @CrossOrigin(origins = "http://127.0.0.1:5500")
-    ApiResponse incPositiveReviews(@RequestBody Statistics statistics)
-    {
-        Optional<Statistics> res = statisticsService.getStatisticsByToken(statistics.getToken());
-        if(res.isEmpty())
-            return ApiResponse.error(404, "请求的对象不存在");
-
-        statistics.setEscapes(0);
-        statistics.setTimeouts(0);
-        statistics.setTotalOrders(0);
-        statistics.setPositiveReviews(1);
-        statistics.setNegativeReviews(0);
-        statisticsService.updateStatistics(statistics);
-        return ApiResponse.ok(200);
-    }
-
-    @PostMapping(value = "/statistics/incNegativeReviews")
-    @CrossOrigin(origins = "http://127.0.0.1:5500")
-    ApiResponse incNegativeReviews(@RequestBody Statistics statistics)
-    {
-        Optional<Statistics> res = statisticsService.getStatisticsByToken(statistics.getToken());
-        if(res.isEmpty())
-            return ApiResponse.error(404, "请求的对象不存在");
-
-        statistics.setEscapes(0);
-        statistics.setTimeouts(0);
-        statistics.setTotalOrders(0);
-        statistics.setPositiveReviews(0);
-        statistics.setNegativeReviews(1);
-        statisticsService.updateStatistics(statistics);
-        return ApiResponse.ok(200);
+        }
+        catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e)
+        {
+            return ApiResponse.error(500, "服务器内部错误");
+        }
     }
 
     void insert(String token)
@@ -164,5 +107,14 @@ public class StatisticsController
         statistics.setPositiveReviews(0);
         statistics.setNegativeReviews(0);
         statisticsService.insertStatistics(statistics);
+    }
+
+    private void resetFields(Statistics statistics)
+    {
+        statistics.setEscapes(0);
+        statistics.setTimeouts(0);
+        statistics.setTotalOrders(0);
+        statistics.setPositiveReviews(0);
+        statistics.setNegativeReviews(0);
     }
 }
