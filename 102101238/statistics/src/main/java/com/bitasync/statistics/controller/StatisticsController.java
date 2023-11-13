@@ -125,6 +125,23 @@ public class StatisticsController
         return ApiResponse.ok(200);
     }
 
+    @PostMapping(value = "/statistics/incNegativeReviews")
+    @CrossOrigin(origins = "http://127.0.0.1:5500")
+    ApiResponse incNegativeReviews(@RequestBody Statistics statistics)
+    {
+        Optional<Statistics> res = statisticsService.getStatisticsByToken(statistics.getToken());
+        if(res.isEmpty())
+            return ApiResponse.error(404, "请求的对象不存在");
+
+        statistics.setEscapes(0);
+        statistics.setTimeouts(0);
+        statistics.setTotalOrders(0);
+        statistics.setPositiveReviews(0);
+        statistics.setNegativeReviews(1);
+        statisticsService.updateStatistics(statistics);
+        return ApiResponse.ok(200);
+    }
+
     void insert(String token)
     {
         Statistics statistics = new Statistics();
