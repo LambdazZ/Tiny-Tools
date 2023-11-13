@@ -31,7 +31,7 @@ public class StatisticsController
     {
         Optional<Statistics> res = statisticsService.getStatisticsByToken(statistics.getToken());
         if(res.isPresent())
-            return ApiResponse.error(404, "目标已存在");
+            return ApiResponse.error(409, "目标已存在");
 
         insert(statistics.getToken());
         return ApiResponse.ok(200);
