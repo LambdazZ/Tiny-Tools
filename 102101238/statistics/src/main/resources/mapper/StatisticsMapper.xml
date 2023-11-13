@@ -22,4 +22,21 @@
         FROM statistics
         WHERE token = #{token}
     </select>
+
+    <insert id="insertStatistics" parameterType="com.bitasync.statistics.model.Statistics">
+        INSERT INTO `statistics`(`id`, `token`, `escapes`, `timeouts`, `totalOrders`, `positiveReviews`, `negativeReviews`)
+            VALUE(#{id}, #{token}, #{escapes}, #{timeouts}, #{totalOrders}, #{positiveReviews}, #{negativeReviews})
+    </insert>
+
+    <update id="updateStatistics" parameterType="com.bitasync.statistics.model.Statistics">
+        UPDATE `statistics`
+        SET
+            escapes = escapes + #{escapes},
+            timeouts = timeouts + #{timeouts},
+            totalOrders = totalOrders + #{totalOrders},
+            positiveReviews = positiveReviews + #{positiveReviews},
+            negativeReviews = negativeReviews + #{negativeReviews}
+        WHERE
+            token = #{token}
+    </update>
 </mapper>

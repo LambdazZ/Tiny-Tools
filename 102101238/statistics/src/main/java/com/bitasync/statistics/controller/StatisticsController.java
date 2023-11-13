@@ -1,10 +1,13 @@
 package com.bitasync.statistics.controller;
 
+import com.bitasync.statistics.config.ApiResponse;
 import com.bitasync.statistics.model.Statistics;
 import com.bitasync.statistics.service.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 /**
  * @author Lambda
@@ -23,22 +26,24 @@ public class StatisticsController
     @PostMapping(value = "/statistics/get")
     @CrossOrigin(origins = "http://127.0.0.1:5500")
     @ResponseBody
-    Statistics getStatistics(@RequestBody Statistics statistics)
+    ApiResponse getStatistics(@RequestBody Statistics statistics)
     {
-        return statisticsService.getStatistics(statistics.getId()).get();
+        Optional<Statistics> res = statisticsService.getStatistics(statistics.getId());
+        return res.map(value -> ApiResponse.ok(200, value)).orElseGet(() -> ApiResponse.error(404, "请求的对象不存在"));
     }
 
     @PostMapping(value = "/statistics/getByToken")
     @CrossOrigin(origins = "http://127.0.0.1:5500")
     @ResponseBody
-    Statistics getStatisticsByToken(@RequestBody Statistics statistics)
+    ApiResponse getStatisticsByToken(@RequestBody Statistics statistics)
     {
-        return statisticsService.getStatisticsByToken(statistics.getToken()).get();
+        Optional<Statistics> res = statisticsService.getStatisticsByToken(statistics.getToken());
+        return res.map(value -> ApiResponse.ok(200, value)).orElseGet(() -> ApiResponse.error(404, "请求的对象不存在"));
     }
 
     @PostMapping(value = "/statistics/update")
     @CrossOrigin(origins = "http://127.0.0.1:5500")
-    void updateStatistics(@RequestBody Statistics statistics)
+    ApiResponse updateStatistics(@RequestBody Statistics statistics)
     {
         if(!statisticsService.getStatisticsByToken(statistics.getToken()).isPresent())
             insert(statistics.getToken());
@@ -49,6 +54,7 @@ public class StatisticsController
         statistics.setPositiveReviews(statistics.getPositiveReviews() == null ? 0: statistics.getPositiveReviews());
         statistics.setNegativeReviews(statistics.getNegativeReviews() == null ? 0: statistics.getNegativeReviews());
         statisticsService.updateStatistics(statistics);
+        return ApiResponse.ok(200);
     }
 
     void insert(String token)
